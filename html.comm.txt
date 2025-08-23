@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chremedy - Camera Test</title>
+    <style>
+        body { background-color: #1a4f1a; color: white; text-align: center; padding: 20px; }
+        #camera-container { margin: 20px auto; max-width: 500px; }
+        #video { width: 100%; border-radius: 10px; }
+        button { background: white; color: #1a4f1a; border: none; padding: 15px 30px; 
+                 border-radius: 30px; font-size: 18px; margin: 10px; cursor: pointer; }
+        #result { margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); 
+                 border-radius: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <h1>Chremedy</h1>
+    <p>Scan any leaf to discover healing properties</p>
+    
+    <div id="camera-container">
+        <video id="video" autoplay></video>
+        <button id="start-camera">Start Camera</button>
+        <button id="take-photo" disabled>Scan Plant</button>
+    </div>
+    
+    <div id="result">
+        <h3>Plant Analysis</h3>
+        <p>This would show plant information if we had AI capabilities.</p>
+        <p>In a real app, this would connect to a plant identification service.</p>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const startBtn = document.getElementById('start-camera');
+        const scanBtn = document.getElementById('take-photo');
+        const result = document.getElementById('result');
+        
+        startBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: true 
+                });
+                video.srcObject = stream;
+                startBtn.disabled = true;
+                scanBtn.disabled = false;
+            } catch (err) {
+                alert('Camera access denied or not available');
+                console.error(err);
+            }
+        });
+        
+        scanBtn.addEventListener('click', () => {
+            result.style.display = 'block';
+            alert('In a real app, this would analyze your plant. This requires advanced AI and a plant database.');
+        });
+    </script>
+</body>
+</html>
